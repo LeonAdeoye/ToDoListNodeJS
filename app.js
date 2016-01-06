@@ -11,7 +11,10 @@ app.set('port', process.env.PORT || 3000);
 MongoClient.connect('mongodb://127.0.0.1:27017/todo', 
 	function(err, database)
 	{
-		if(err) throw err;
+		if(err)
+		{
+			throw err;
+		}
 		
 		// Connected
 		db = database;
@@ -40,7 +43,8 @@ router.route('/')
 					});
 				});
 		})
-	.post(function(req, res, next)
+	.post(
+		function(req, res, next)
 		{
 			var item = req.body;
 			itemsCollection.insert(item, 
@@ -60,7 +64,7 @@ router.route('/:id')
 		function(req, res, next)
 		{
 			var id = req.params['id'];
-			var lookup = { _id: new mongodb.ObjectID(id)};
+			var lookup = { _id: new mongodb.ObjectID(id) };
 			itemsCollection.remove(lookup, 
 				function(err, results)
 				{
